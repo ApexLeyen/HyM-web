@@ -1,20 +1,24 @@
-# Use lightweight Debian-based Node.js 20 LTS image (glibc for better-sqlite3 compatibility)
+# Use Debian-based Node.js 20 LTS image (glibc compatible)
 FROM node:20-slim
+
+# Install compilation tools needed by node-gyp for better-sqlite3
+RUN apt-get update && apt-get install -y --no-install-recommends python3 make g++ \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-# Copy package files
+# Copy package manifests
 COPY package*.json ./
 
-# Install production dependencies (uses precompiled glibc binaries, avoiding Alpine musl SIGSEGV)
-RUN npm ci --omit=dev
+# Install production dependencies
+RUN npm install --omit=dev
 
 # Copy application files
 COPY . .
 
-# Expose port (Render sets $PORT dynamically, default 3000)
+# Expose port (Render sets $PORT dynamically)
 ENV PORT=3000
 EXPOSE 3000
 
-# Start application directly
+# Start server
 CMD ["node", "server.js"]
