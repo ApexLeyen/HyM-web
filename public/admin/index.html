@@ -1,0 +1,1927 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+  <!-- Favicon Oficial H&M Multiservice -->
+  <link rel="icon" type="image/png" href="/images/logo.png">
+  <link rel="apple-touch-icon" href="/images/logo.png">
+
+  <!-- Open Graph / Previsualización en Redes Sociales (WhatsApp, Facebook, Instagram) -->
+  <meta property="og:site_name" content="H&M Multiservice">
+  <meta property="og:title" content="H&M Multiservice | Más que servicios, somos solución">
+  <meta property="og:description" content="Venta de smartphones desbloqueados, accesorios de audio, bocinas y servicio técnico especializado en Baní, Peravia. ¡Garantía en todos los equipos!">
+  <meta property="og:image" content="/images/logo.png">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#0a4d8c">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Administración | H&M Multiservice</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Noto+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #0a4d8c;
+      --primary-dark: #073866;
+      --primary-light: #e0f2fe;
+      --navy-dark: #0a192f;
+      --accent-cyan: #38bdf8;
+      --accent-red: #e53935;
+      --success: #16a34a;
+      --warning: #d97706;
+      --bg-page: #f8fafc;
+      --surface: #ffffff;
+      --text-dark: #0f172a;
+      --text-body: #334155;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --border-focus: #0a4d8c;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
+      --shadow-lg: 0 12px 28px -4px rgba(0,0,0,0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans', sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-body);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Montserrat', sans-serif;
+      color: var(--text-dark);
+    }
+
+    /* ========================================================
+       NAVBAR UNIFICADA (IGUAL A LA TIENDA PÚBLICA)
+       ======================================================== */
+    .hym-navbar {
+      position: sticky !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      z-index: 99999 !important;
+      background: rgba(10, 25, 47, 0.98) !important;
+      backdrop-filter: blur(16px) !important;
+      -webkit-backdrop-filter: blur(16px) !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
+      width: 100% !important;
+    }
+    .hym-nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 10px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .hym-brand-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none !important;
+    }
+    .hym-logo-badge {
+      background: #ffffff;
+      padding: 4px 8px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 46px;
+      border: 1px solid rgba(255,255,255,0.8);
+    }
+    .hym-logo-badge img {
+      height: 38px;
+      width: auto;
+      object-fit: contain;
+    }
+    .hym-brand-info {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+    .hym-brand-name {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: #ffffff;
+      line-height: 1.1;
+    }
+    .hym-brand-motto {
+      font-family: 'Noto Sans', sans-serif;
+      font-size: 0.72rem;
+      color: var(--accent-cyan);
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+    .hym-admin-badge-pill {
+      background: rgba(56, 189, 248, 0.18);
+      color: var(--accent-cyan);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 50px;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+    }
+
+    .hym-admin-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    .hym-nav-item {
+      color: #cbd5e1;
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+    .hym-nav-item:hover {
+      color: #ffffff;
+    }
+
+    .hym-admin-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .hym-btn-add {
+      background: var(--primary);
+      color: #ffffff;
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 9px 18px;
+      border-radius: 8px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 14px rgba(10, 77, 140, 0.4);
+      transition: all 0.2s ease;
+    }
+    .hym-btn-add:hover {
+      background: #0d5ea6;
+      transform: translateY(-1px);
+    }
+    .hym-btn-icon {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+    }
+    .hym-btn-icon:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+    .hym-btn-logout:hover {
+      background: rgba(229, 57, 53, 0.3) !important;
+      color: #fca5a5 !important;
+      border-color: rgba(229, 57, 53, 0.5) !important;
+    }
+
+    /* ========================================================
+       MAIN CONTAINER & ADMIN BANNER CARD
+       ======================================================== */
+    main {
+      flex: 1;
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .admin-banner-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px 32px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .admin-banner-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 100%;
+      background: var(--primary);
+    }
+    .admin-banner-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #e0f2fe;
+      color: #0369a1;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 50px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+    }
+    .admin-banner-title {
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+    .admin-banner-motto {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* Tabs de Navegación */
+    .admin-nav-tabs {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+      padding-bottom: 8px;
+    }
+    .admin-tab-btn {
+      padding: 11px 22px;
+      border-radius: 50px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      color: var(--text-muted);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
+    }
+    .admin-tab-btn:hover {
+      background: #f1f5f9;
+      color: var(--text-dark);
+    }
+    .admin-tab-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 4px 12px rgba(10, 77, 140, 0.28);
+    }
+
+    /* ========================================================
+       STAT CARDS (COLORES Y DISEÑO ALINEADO)
+       ======================================================== */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 18px;
+      margin-bottom: 26px;
+    }
+
+    .stat-card {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: all 0.25s ease;
+    }
+    .stat-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-color: #cbd5e1;
+    }
+
+    .stat-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+
+    .stat-icon.blue { background: #e0f2fe; color: #0284c7; }
+    .stat-icon.green { background: #dcfce7; color: #16a34a; }
+    .stat-icon.amber { background: #fee2e2; color: #e11d48; }
+    .stat-icon.purple { background: #f3e8ff; color: #7c3aed; }
+
+    .stat-info .stat-val {
+      font-size: 1.7rem;
+      font-weight: 800;
+      font-family: 'Montserrat', sans-serif;
+      color: var(--text-dark);
+      line-height: 1.1;
+    }
+
+    .stat-info .stat-lbl {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin-top: 4px;
+    }
+
+    /* ========================================================
+       TABLE CONTAINER & FILTERS
+       ======================================================== */
+    .card {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+
+    .table-toolbar {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+      justify-content: space-between;
+      background: #f8fafc;
+    }
+
+    .search-box {
+      position: relative;
+      flex: 1;
+      min-width: 260px;
+      max-width: 440px;
+    }
+
+    .search-box i {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 10px 14px 10px 40px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      background: #ffffff;
+      transition: all 0.2s;
+    }
+    .search-box input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(10, 77, 140, 0.15);
+    }
+
+    .filters-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .filter-select {
+      padding: 10px 16px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      background: #ffffff;
+      color: var(--text-body);
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 600;
+    }
+    .filter-select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(10, 77, 140, 0.15);
+    }
+
+    .table-responsive {
+      overflow-x: auto;
+      width: 100%;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th {
+      background: #f8fafc;
+      padding: 14px 20px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    td {
+      padding: 16px 20px;
+      border-bottom: 1px solid #f1f5f9;
+      vertical-align: middle;
+      font-size: 0.92rem;
+    }
+
+    tr:hover td {
+      background-color: #f8fafc;
+    }
+
+    .prod-img {
+      width: 50px;
+      height: 50px;
+      border-radius: 10px;
+      object-fit: contain;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      padding: 2px;
+    }
+
+    .prod-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      color: var(--text-dark);
+      font-size: 0.96rem;
+      margin-bottom: 4px;
+    }
+
+    .prod-sku {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      font-family: monospace;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .badge-success { background: #dcfce7; color: #15803d; }
+    .badge-danger { background: #fee2e2; color: #b91c1c; }
+    .badge-info { background: #e0f2fe; color: #0369a1; }
+    .badge-secondary { background: #f1f5f9; color: #475569; }
+
+    .price-tag {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      color: var(--primary);
+      font-size: 1.05rem;
+    }
+
+    .price-regular {
+      text-decoration: line-through;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      margin-left: 6px;
+    }
+
+    .actions-cell {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 18px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(10, 77, 140, 0.25);
+    }
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      border-color: #cbd5e1;
+      background: #ffffff;
+      color: var(--text-body);
+    }
+    .btn-outline:hover {
+      background: #f1f5f9;
+      color: var(--text-dark);
+    }
+
+    .btn-icon {
+      padding: 7px;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Messages Section */
+    .msg-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s;
+    }
+    .msg-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: #cbd5e1;
+    }
+    .msg-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .msg-sender {
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--text-dark);
+    }
+    .msg-badge {
+      font-size: 0.75rem;
+      background: #e0f2fe;
+      color: #0369a1;
+      padding: 3px 10px;
+      border-radius: 50px;
+      font-weight: 700;
+    }
+    .msg-body {
+      font-size: 0.92rem;
+      color: #334155;
+      line-height: 1.6;
+      background: #f8fafc;
+      padding: 14px 16px;
+      border-radius: 10px;
+      margin-bottom: 14px;
+      border-left: 4px solid var(--primary);
+    }
+
+    /* Modal Styling */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 100000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal {
+      background: #ffffff;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 680px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+      animation: hymModalIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .modal-header {
+      padding: 22px 28px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .modal-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--text-dark);
+    }
+    .modal-close {
+      background: #f1f5f9;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .modal-close:hover {
+      background: #e2e8f0;
+      color: var(--text-dark);
+    }
+
+    .modal-body {
+      padding: 24px 28px;
+    }
+
+    .modal-footer {
+      padding: 18px 28px;
+      border-top: 1px solid var(--border);
+      background: #fafbfc;
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    /* Form Inputs */
+    .form-group {
+      margin-bottom: 18px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .form-control, input[type="text"], input[type="number"], input[type="password"], select, textarea {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      font-size: 0.92rem;
+      font-family: inherit;
+      box-sizing: border-box;
+      transition: all 0.2s;
+    }
+    .form-control:focus, input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(10, 77, 140, 0.15);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .form-row-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+    }
+
+    /* Image Preview */
+    .image-preview-wrapper {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+    .preview-box {
+      width: 80px;
+      height: 80px;
+      border-radius: 12px;
+      border: 2px dashed #cbd5e1;
+      background: #f8fafc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .preview-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .upload-inputs {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* Toast */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #0f172a;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 1000000;
+    }
+    #toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+    #toast.success { background: #15803d; }
+    #toast.error { background: #b91c1c; }
+
+    /* Login Overlay */
+    #loginOverlay {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, var(--navy-dark) 0%, var(--primary) 100%);
+      z-index: 999999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .login-card {
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.45);
+      width: 100%;
+      max-width: 420px;
+      padding: 40px 34px;
+      text-align: center;
+      animation: hymModalIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .login-logo {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 16px;
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 8px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+    }
+    .login-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    @keyframes hymModalIn {
+      from { opacity: 0; transform: translateY(16px) scale(0.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @media (max-width: 768px) {
+      .hym-admin-nav-links { display: none; }
+      .form-row, .form-row-3 { grid-template-columns: 1fr; }
+    }
+  
+    .hym-btn-nav-key {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .hym-btn-nav-key:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.35);
+      transform: translateY(-1px);
+    }
+
+</style>
+</head>
+<body>
+
+  <!-- PANTALLA DE INICIO DE SESIÓN ADMINISTRATIVO -->
+  <div id="loginOverlay">
+    <div class="login-card">
+      <div class="login-logo">
+        <img src="/images/logo.png" alt="H&M Multiservice">
+      </div>
+      <h2 style="font-family: 'Montserrat', sans-serif; font-size: 1.5rem; font-weight: 800; color: #0a4d8c; margin-bottom: 6px;">
+        H&M Multiservice
+      </h2>
+      <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 24px;">
+        Acceso restringido al Panel de Control
+      </p>
+
+      <div id="loginError" style="display: none; background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; padding: 10px 14px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; margin-bottom: 18px; text-align: left;">
+      </div>
+
+      <form id="adminLoginForm" onsubmit="handleLoginSubmit(event)" style="text-align: left;">
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #334155; margin-bottom: 6px; text-transform: uppercase;">
+            Usuario
+          </label>
+          <div style="position: relative;">
+            <i class="fa-solid fa-user" style="position: absolute; left: 14px; top: 13px; color: #94a3b8;"></i>
+            <input type="text" id="loginUsername" required placeholder="Usuario"
+              style="width: 100%; padding: 11px 14px 11px 38px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.95rem; font-family: inherit; box-sizing: border-box;">
+          </div>
+        </div>
+
+        <div style="margin-bottom: 22px;">
+          <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #334155; margin-bottom: 6px; text-transform: uppercase;">
+            Contraseña
+          </label>
+          <div style="position: relative;">
+            <i class="fa-solid fa-lock" style="position: absolute; left: 14px; top: 13px; color: #94a3b8;"></i>
+            <input type="password" id="loginPassword" required placeholder="Contraseña"
+              style="width: 100%; padding: 11px 14px 11px 38px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.95rem; font-family: inherit; box-sizing: border-box;">
+          </div>
+        </div>
+
+        <button type="submit" id="btnLoginSubmit"
+          style="width: 100%; background: #0a4d8c; color: white; border: none; padding: 13px; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 14px rgba(10, 77, 140, 0.35);">
+          <i class="fa-solid fa-right-to-bracket"></i> Iniciar Sesión
+        </button>
+      </form>
+
+        <div style="margin-top: 14px;">
+          <a href="/" style="display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; background: #f8fafc; color: #334155; text-decoration: none; padding: 12px; border-radius: 10px; font-weight: 700; font-size: 0.92rem; border: 1px solid #cbd5e1; transition: all 0.2s;" onmouseover="this.style.background='#f1f5f9'; this.style.borderColor='#94a3b8'; this.style.color='#0a4d8c';" onmouseout="this.style.background='#f8fafc'; this.style.borderColor='#cbd5e1'; this.style.color='#334155';">
+            <i class="fa-solid fa-house"></i> Volver a la Página Web
+          </a>
+        </div>
+
+
+      
+    </div>
+  </div>
+
+
+  <!-- Header -->
+  <header class="hym-navbar">
+    <div class="hym-nav-container">
+      
+      <!-- Brand Link con Logo Oficial -->
+      <a href="/" class="hym-brand-link" title="Ir a la Portada del Sitio">
+        <div class="hym-logo-badge">
+          <img src="/images/logo.png" alt="H&M Multiservice">
+        </div>
+        <div class="hym-brand-info">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="hym-brand-name">H&M Multiservice</span>
+            <span class="hym-admin-badge-pill">ADMIN</span>
+          </div>
+          <span class="hym-brand-motto">Más que servicios, somos solución.</span>
+        </div>
+      </a>
+
+      <!-- Accesos Rápidos a la Web -->
+      <nav class="hym-admin-nav-links">
+        <a href="/" target="_blank" class="hym-nav-item">
+          <span>🏠</span> Inicio
+        </a>
+        <a href="/shop" target="_blank" class="hym-nav-item">
+          <span>🛍️</span> Tienda
+        </a>
+        <a href="/contact" target="_blank" class="hym-nav-item">
+          <span>📞</span> Contacto
+        </a>
+      </nav>
+
+      <!-- Botones de Acción del Panel -->
+      <div class="hym-admin-actions">
+        <button id="btnOpenAddModal" class="hym-btn-add" onclick="openAddModal()">
+          <i class="fa-solid fa-plus"></i> Nuevo Producto
+        </button>
+        <button onclick="openChangePassModal()" class="hym-btn-nav-key" title="Cambiar Contraseña">
+          <i class="fa-solid fa-key" style="color: var(--accent-cyan);"></i>
+          <span>Seguridad</span>
+        </button>
+        <button onclick="handleLogout()" class="hym-btn-icon hym-btn-logout" title="Cerrar Sesión">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    
+    <!-- Tabs de Navegación -->
+    <div class="admin-nav-tabs">
+      <button class="admin-tab-btn active" id="tabBtnProducts" onclick="switchAdminTab('products')">
+        <i class="fa-solid fa-box-archive"></i> Catálogo de Productos
+      </button>
+      <button class="admin-tab-btn" id="tabBtnMessages" onclick="switchAdminTab('messages')">
+        <i class="fa-solid fa-envelope"></i> Mensajes de Clientes
+        <span id="unreadMsgBadge" style="display: inline-block; background: #e53935; color: white; padding: 2px 8px; border-radius: 50px; font-size: 0.72rem; font-weight: 700;">0</span>
+      </button>
+    </div>
+
+    <!-- Page Header Productos -->
+    <div id="productsViewHeader" class="page-header">
+      <div class="page-title">
+        <h1>Catálogo de Productos</h1>
+        <p>Gestiona los artículos de la tienda, fotos, precios y stock</p>
+      </div>
+    </div>
+
+
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon blue"><i class="fa-solid fa-box-archive"></i></div>
+        <div class="stat-info">
+          <div class="stat-val" id="statTotal">-</div>
+          <div class="stat-lbl">Total Productos</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon green"><i class="fa-solid fa-circle-check"></i></div>
+        <div class="stat-info">
+          <div class="stat-val" id="statInStock">-</div>
+          <div class="stat-lbl">En Stock</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon amber"><i class="fa-solid fa-triangle-exclamation"></i></div>
+        <div class="stat-info">
+          <div class="stat-val" id="statOutOfStock">-</div>
+          <div class="stat-lbl">Agotados</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon purple"><i class="fa-solid fa-tags"></i></div>
+        <div class="stat-info">
+          <div class="stat-val" id="statCategories">-</div>
+          <div class="stat-lbl">Categorías</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table Container -->
+    <div class="card">
+      <div class="table-toolbar">
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="searchInput" placeholder="Buscar por título, SKU...">
+        </div>
+        <div class="filters-group">
+          <select id="categoryFilter" class="filter-select">
+            <option value="all">Todas las Categorías</option>
+          </select>
+          <select id="statusFilter" class="filter-select">
+            <option value="all">Todos los Estados</option>
+            <option value="publish">Publicados</option>
+            <option value="draft">Borradores</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 60px;">Imagen</th>
+              <th>Producto</th>
+              <th>Categoría</th>
+              <th>Precio</th>
+              <th>Stock</th>
+              <th>Estado</th>
+              <th style="text-align: right;">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="productsTableBody">
+            <tr>
+              <td colspan="7" class="empty-state">
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                <p>Cargando productos...</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  
+  <!-- MODAL CAMBIAR CONTRASEÑA -->
+  <!-- MODAL CAMBIAR CONTRASEÑA (REDISEÑADO ELEGANTE) -->
+  <div id="changePassModal" class="modal-backdrop" onclick="if(event.target === this) closeChangePassModal();">
+    <div style="background: #ffffff; border-radius: 24px; max-width: 480px; width: 100%; box-shadow: 0 25px 60px -10px rgba(15, 23, 42, 0.4); overflow: hidden; position: relative; animation: hymModalIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);">
+      
+      <!-- Barra decorativa de acento corporativo -->
+      <div style="height: 6px; background: linear-gradient(90deg, #0a4d8c, #38bdf8);"></div>
+
+      <!-- Botón de Cerrar -->
+      <button onclick="closeChangePassModal()" style="position: absolute; right: 20px; top: 20px; background: #f1f5f9; border: 1px solid #e2e8f0; width: 36px; height: 36px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #64748b; transition: all 0.2s; z-index: 10;" onmouseover="this.style.background='#e2e8f0'; this.style.color='#0f172a';" onmouseout="this.style.background='#f1f5f9'; this.style.color='#64748b';">&times;</button>
+
+      <!-- Cabecera del Modal -->
+      <div style="padding: 32px 32px 18px; text-align: center;">
+        <div style="width: 64px; height: 64px; border-radius: 20px; background: #e0f2fe; color: #0a4d8c; display: inline-flex; align-items: center; justify-content: center; font-size: 1.6rem; margin-bottom: 14px; box-shadow: 0 8px 18px -4px rgba(10, 77, 140, 0.25);">
+          <i class="fa-solid fa-shield-halved"></i>
+        </div>
+        <h3 style="font-family: 'Montserrat', sans-serif; font-size: 1.5rem; font-weight: 800; color: #0f172a; margin-bottom: 6px;">
+          Seguridad y Contraseña
+        </h3>
+        <p style="font-size: 0.88rem; color: #64748b; max-width: 320px; margin: 0 auto; line-height: 1.4;">
+          Actualiza la clave para proteger el inventario y datos de H&M Multiservice.
+        </p>
+      </div>
+
+      <!-- Formulario -->
+      <form id="changePassForm" onsubmit="handleChangePassSubmit(event)" style="padding: 0 32px 32px;">
+        
+        <div id="changePassAlert" style="display: none; padding: 12px 16px; border-radius: 10px; font-size: 0.88rem; font-weight: 600; margin-bottom: 18px;"></div>
+
+        <!-- Campo 1: Clave Actual -->
+        <div style="margin-bottom: 18px;">
+          <label style="display: block; font-size: 0.8rem; font-weight: 700; color: #334155; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">
+            Contraseña Actual *
+          </label>
+          <div style="position: relative;">
+            <i class="fa-solid fa-lock" style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 0.95rem;"></i>
+            <input type="password" id="currentPass" required placeholder="Ingresa tu clave actual"
+              style="width: 100%; padding: 12px 42px 12px 38px; border: 1px solid #cbd5e1; border-radius: 12px; font-size: 0.95rem; font-family: inherit; transition: all 0.2s; box-sizing: border-box;">
+            <button type="button" onclick="togglePasswordVisibility('currentPass', this)" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #94a3b8; cursor: pointer; font-size: 0.95rem; padding: 4px;" title="Ver / Ocultar">
+              <i class="fa-regular fa-eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Campo 2: Nueva Clave -->
+        <div style="margin-bottom: 18px;">
+          <label style="display: block; font-size: 0.8rem; font-weight: 700; color: #334155; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">
+            Nueva Contraseña *
+          </label>
+          <div style="position: relative;">
+            <i class="fa-solid fa-key" style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 0.95rem;"></i>
+            <input type="password" id="newPass" required minlength="4" placeholder="Mínimo 4 caracteres"
+              style="width: 100%; padding: 12px 42px 12px 38px; border: 1px solid #cbd5e1; border-radius: 12px; font-size: 0.95rem; font-family: inherit; transition: all 0.2s; box-sizing: border-box;">
+            <button type="button" onclick="togglePasswordVisibility('newPass', this)" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #94a3b8; cursor: pointer; font-size: 0.95rem; padding: 4px;" title="Ver / Ocultar">
+              <i class="fa-regular fa-eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Campo 3: Confirmar Nueva Clave -->
+        <div style="margin-bottom: 24px;">
+          <label style="display: block; font-size: 0.8rem; font-weight: 700; color: #334155; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">
+            Confirmar Nueva Contraseña *
+          </label>
+          <div style="position: relative;">
+            <i class="fa-solid fa-check-double" style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 0.95rem;"></i>
+            <input type="password" id="confirmPass" required minlength="4" placeholder="Repite la nueva contraseña"
+              style="width: 100%; padding: 12px 42px 12px 38px; border: 1px solid #cbd5e1; border-radius: 12px; font-size: 0.95rem; font-family: inherit; transition: all 0.2s; box-sizing: border-box;">
+            <button type="button" onclick="togglePasswordVisibility('confirmPass', this)" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #94a3b8; cursor: pointer; font-size: 0.95rem; padding: 4px;" title="Ver / Ocultar">
+              <i class="fa-regular fa-eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Botones de Acción -->
+        <div style="display: flex; gap: 12px;">
+          <button type="button" onclick="closeChangePassModal()" 
+            style="flex: 1; padding: 13px; background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; border-radius: 12px; font-weight: 700; font-size: 0.92rem; cursor: pointer; transition: all 0.2s;"
+            onmouseover="this.style.background='#e2e8f0';" onmouseout="this.style.background='#f1f5f9';">
+            Cancelar
+          </button>
+
+          <button type="submit" id="btnSavePass"
+            style="flex: 1.4; padding: 13px; background: #0a4d8c; color: white; border: none; border-radius: 12px; font-weight: 700; font-size: 0.92rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 14px rgba(10, 77, 140, 0.35); transition: all 0.2s;"
+            onmouseover="this.style.background='#073866';" onmouseout="this.style.background='#0a4d8c';">
+            <i class="fa-solid fa-floppy-disk"></i> Guardar Clave
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- SECCIÓN MENSAJES DE CONTACTO -->
+  <div id="messagesSection" style="display: none;">
+    <div class="page-header">
+      <div class="page-title">
+        <h1>Bandeja de Consultas de Clientes</h1>
+        <p>Mensajes enviados desde el formulario web de contacto</p>
+      </div>
+      <button class="btn btn-outline" onclick="loadMessages()">
+        <i class="fa-solid fa-rotate"></i> Actualizar
+      </button>
+    </div>
+
+    <div id="messagesListContainer">
+      <div class="card" style="padding: 40px; text-align: center; color: #64748b;">
+        <i class="fa-solid fa-spinner fa-spin" style="font-size: 1.5rem; margin-bottom: 10px;"></i>
+        <p>Cargando mensajes...</p>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+  <!-- Add/Edit Product Modal -->
+  <div class="modal-backdrop" id="productModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modalTitle">Agregar Producto</h3>
+        <button class="modal-close" onclick="closeProductModal()">&times;</button>
+      </div>
+      <form id="productForm">
+        <div class="modal-body">
+          <input type="hidden" id="productId">
+
+          <div class="form-group">
+            <label for="prodTitle">Título del Producto *</label>
+            <input type="text" id="prodTitle" required placeholder="Ej: Xiaomi Redmi Note 13">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="prodSku">SKU / Código</label>
+              <input type="text" id="prodSku" placeholder="Ej: 1624-ZTE">
+            </div>
+            <div class="form-group">
+              <label for="prodCategory">Categoría</label>
+              <input type="text" id="prodCategory" placeholder="Ej: Dispositivos Móviles, Audio" list="categoryDatalist">
+              <datalist id="categoryDatalist"></datalist>
+            </div>
+          </div>
+
+          <div class="form-row-3">
+            <div class="form-group">
+              <label for="prodPrice">Precio Venta (RD$) *</label>
+              <input type="number" step="0.01" id="prodPrice" required placeholder="0.00">
+            </div>
+            <div class="form-group">
+              <label for="prodRegularPrice">Precio Regular</label>
+              <input type="number" step="0.01" id="prodRegularPrice" placeholder="0.00">
+            </div>
+            <div class="form-group">
+              <label for="prodSalePrice">Precio Oferta</label>
+              <input type="number" step="0.01" id="prodSalePrice" placeholder="Opcional">
+            </div>
+          </div>
+
+          <div class="form-row-3">
+            <div class="form-group">
+              <label for="prodStockStatus">Disponibilidad *</label>
+              <select id="prodStockStatus">
+                <option value="instock">En Stock</option>
+                <option value="outofstock">Agotado</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="prodStockQuantity">Cantidad en Stock (Unidades)</label>
+              <input type="number" id="prodStockQuantity" min="0" placeholder="Ej: 15 (Opcional)">
+            </div>
+            <div class="form-group">
+              <label for="prodStatus">Estado de Publicación</label>
+              <select id="prodStatus">
+                <option value="publish">Publicado</option>
+                <option value="draft">Borrador</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Image Selection -->
+          <div class="form-group">
+            <label>Imagen del Producto</label>
+            <div class="image-preview-wrapper">
+              <div class="preview-box" id="previewContainer">
+                <i class="fa-solid fa-image text-muted" id="previewPlaceholder"></i>
+                <img id="previewImg" src="" style="display: none;" alt="Vista previa">
+              </div>
+              <div class="upload-inputs">
+                <input type="file" id="prodImageFile" accept="image/*">
+                <input type="text" id="prodImageUrl" placeholder="O ingresa URL de imagen existente: /uploads/...">
+              </div>
+            </div>
+          </div>
+
+          
+          <!-- Destacar como Oferta del Día -->
+          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px 18px; margin-bottom: 18px; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <label for="prodIsDeal" style="font-weight: 700; color: #0f172a; margin-bottom: 2px; cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 0.9rem;">
+                🔥 Destacar en Ofertas del Día (Portada)
+              </label>
+              <span style="font-size: 0.78rem; color: #64748b;">Aparecerá en los 3 artículos de oferta exclusiva en la página principal</span>
+            </div>
+            <input type="checkbox" id="prodIsDeal" style="width: 22px; height: 22px; accent-color: #0a4d8c; cursor: pointer;">
+          </div>
+
+          <div class="form-group">
+            <label for="prodDesc">Descripción</label>
+            <textarea id="prodDesc" rows="3" placeholder="Detalles, especificaciones técnicas..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" onclick="closeProductModal()">Cancelar</button>
+          <button type="submit" class="btn btn-primary" id="btnSaveProduct">
+            <i class="fa-solid fa-floppy-disk"></i> Guardar Producto
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div class="modal-backdrop" id="deleteModal">
+    <div class="modal-card" style="max-width: 440px;">
+      <div class="modal-header">
+        <h3 style="color: var(--accent);"><i class="fa-solid fa-triangle-exclamation"></i> Confirmar Eliminación</h3>
+        <button class="modal-close" onclick="closeDeleteModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>¿Estás seguro de que deseas eliminar permanentemente el producto <strong id="deleteProdTitle"></strong>?</p>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;">Esta acción borrará el registro de la base de datos SQLite y no se puede deshacer.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" onclick="closeDeleteModal()">Cancelar</button>
+        <button type="button" class="btn btn-danger" id="btnConfirmDelete">
+          <i class="fa-solid fa-trash-can"></i> Eliminar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast">
+    <span id="toastIcon"></span>
+    <span id="toastMsg"></span>
+  </div>
+
+  <script>
+    let products = [];
+    let deleteTargetId = null;
+
+    // Load initial data
+    
+    // --- AUTENTICACIÓN Y SEGURIDAD ---
+    function getAuthToken() {
+      return localStorage.getItem('hym_admin_token') || '';
+    }
+
+    function setAuthToken(token) {
+      if (token) {
+        localStorage.setItem('hym_admin_token', token);
+      } else {
+        localStorage.removeItem('hym_admin_token');
+      }
+    }
+
+    async function checkAuth() {
+      const token = getAuthToken();
+      if (!token) {
+        showLoginOverlay();
+        return false;
+      }
+
+      try {
+        const res = await fetch('/api/auth/me', {
+          headers: { 'Authorization': 'Bearer ' + token }
+        });
+        const data = await res.json();
+        if (data.authenticated) {
+          hideLoginOverlay();
+          return true;
+        } else {
+          showLoginOverlay();
+          return false;
+        }
+      } catch (err) {
+        showLoginOverlay();
+        return false;
+      }
+    }
+
+    function showLoginOverlay() {
+      document.getElementById('loginOverlay').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function hideLoginOverlay() {
+      document.getElementById('loginOverlay').style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
+    async function handleLoginSubmit(e) {
+      e.preventDefault();
+      const errBox = document.getElementById('loginError');
+      const submitBtn = document.getElementById('btnLoginSubmit');
+      const u = document.getElementById('loginUsername').value.trim();
+      const p = document.getElementById('loginPassword').value;
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verificando...';
+      errBox.style.display = 'none';
+
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: u, password: p })
+        });
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          setAuthToken(data.token);
+          hideLoginOverlay();
+          showToast('Bienvenido, sesión iniciada', 'success');
+          loadStats();
+          loadCategories();
+          loadProducts();
+          loadMessages();
+        } else {
+          throw new Error(data.error || 'Credenciales incorrectas');
+        }
+      } catch (err) {
+        errBox.textContent = err.message;
+        errBox.style.display = 'block';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Iniciar Sesión';
+      }
+    }
+
+    async function handleLogout() {
+      if (!confirm('¿Deseas cerrar tu sesión administrativa?')) return;
+      try {
+        await fetch('/api/auth/logout', {
+          method: 'POST',
+          headers: { 'Authorization': 'Bearer ' + getAuthToken() }
+        });
+      } catch (e) {}
+      setAuthToken(null);
+      showLoginOverlay();
+      showToast('Sesión cerrada', 'info');
+    }
+
+    // Modal Cambiar Contraseña
+    function openChangePassModal() {
+      document.getElementById('changePassForm').reset();
+      document.getElementById('changePassAlert').style.display = 'none';
+      document.getElementById('changePassModal').classList.add('open');
+    }
+
+    function closeChangePassModal() {
+      document.getElementById('changePassModal').classList.remove('open');
+    }
+
+    async function handleChangePassSubmit(e) {
+      e.preventDefault();
+      const currentPassword = document.getElementById('currentPass').value;
+      const newPassword = document.getElementById('newPass').value;
+      const confirmPassword = document.getElementById('confirmPass').value;
+      const alertBox = document.getElementById('changePassAlert');
+      const saveBtn = document.getElementById('btnSavePass');
+
+      if (newPassword !== confirmPassword) {
+        alertBox.style.display = 'block';
+        alertBox.style.background = '#fee2e2';
+        alertBox.style.color = '#b91c1c';
+        alertBox.textContent = 'Las nuevas contraseñas no coinciden.';
+        return;
+      }
+
+      saveBtn.disabled = true;
+      saveBtn.textContent = 'Actualizando...';
+
+      try {
+        const res = await fetch('/api/auth/change-password', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getAuthToken()
+          },
+          body: JSON.stringify({ currentPassword, newPassword })
+        });
+        const data = await res.json();
+
+        if (res.ok) {
+          closeChangePassModal();
+          showToast('Contraseña cambiada exitosamente', 'success');
+        } else {
+          throw new Error(data.error || 'Error al cambiar contraseña');
+        }
+      } catch (err) {
+        alertBox.style.display = 'block';
+        alertBox.style.background = '#fee2e2';
+        alertBox.style.color = '#b91c1c';
+        alertBox.textContent = err.message;
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'Actualizar Contraseña';
+      }
+    }
+
+    // --- TABS DE NAVEGACIÓN Y BANDEJA DE MENSAJES ---
+    function switchAdminTab(tab) {
+      const isProd = tab === 'products';
+      document.getElementById('tabBtnProducts').classList.toggle('active', isProd);
+      document.getElementById('tabBtnMessages').classList.toggle('active', !isProd);
+
+      document.getElementById('productsViewHeader').style.display = isProd ? 'flex' : 'none';
+      document.querySelector('.stats-grid').style.display = isProd ? 'grid' : 'none';
+      document.querySelector('.card').style.display = isProd ? 'block' : 'none';
+      document.getElementById('messagesSection').style.display = isProd ? 'none' : 'block';
+
+      if (!isProd) loadMessages();
+    }
+
+    async function loadMessages() {
+      const container = document.getElementById('messagesListContainer');
+      try {
+        const res = await fetch('/api/contact/messages', {
+          headers: { 'Authorization': 'Bearer ' + getAuthToken() }
+        });
+        if (res.status === 401) {
+          showLoginOverlay();
+          return;
+        }
+        const messages = await res.json();
+        document.getElementById('unreadMsgBadge').textContent = messages.length;
+
+        if (messages.length === 0) {
+          container.innerHTML = `
+            <div class="card" style="padding: 48px; text-align: center; color: #64748b;">
+              <i class="fa-regular fa-envelope-open" style="font-size: 2.5rem; margin-bottom: 12px; color: #94a3b8;"></i>
+              <h3 style="font-size: 1.15rem; color: #334155; margin-bottom: 6px;">Bandeja limpia</h3>
+              <p>Aún no has recibido consultas desde el formulario web.</p>
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = messages.map(m => {
+          const dateStr = new Date(m.created_at).toLocaleString();
+          const cleanPhone = (m.phone || '').replace(/[^0-9]/g, '');
+          const waChatLink = cleanPhone ? `https://wa.me/${cleanPhone.startsWith('1') ? cleanPhone : '1' + cleanPhone}?text=${encodeURIComponent('Hola ' + m.name + ', te escribimos de H&M Multiservice respecto a tu consulta: ' + m.subject)}` : null;
+
+          return `
+            <div class="msg-card">
+              <div class="msg-header">
+                <div>
+                  <span class="msg-sender"><i class="fa-solid fa-user"></i> ${escapeHtml(m.name)}</span>
+                  <span class="msg-badge">${escapeHtml(m.subject)}</span>
+                </div>
+                <div style="font-size: 0.8rem; color: #94a3b8;">
+                  <i class="fa-regular fa-clock"></i> ${dateStr}
+                </div>
+              </div>
+
+              <div style="display: flex; gap: 16px; font-size: 0.88rem; color: #64748b; margin-bottom: 12px; flex-wrap: wrap;">
+                ${m.phone ? `<span><strong>📞 Tel:</strong> ${escapeHtml(m.phone)}</span>` : ''}
+                ${m.email ? `<span><strong>✉️ Email:</strong> ${escapeHtml(m.email)}</span>` : ''}
+              </div>
+
+              <div class="msg-body">
+                ${escapeHtml(m.message)}
+              </div>
+
+              <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                ${waChatLink ? `
+                  <a href="${waChatLink}" target="_blank" class="btn btn-outline" style="color: #16a34a; border-color: #86efac; text-decoration: none;">
+                    <i class="fa-brands fa-whatsapp"></i> Responder por WhatsApp
+                  </a>
+                ` : ''}
+                <button onclick="deleteMessage(${m.id})" class="btn btn-outline" style="color: var(--accent);">
+                  <i class="fa-solid fa-trash-can"></i> Eliminar
+                </button>
+              </div>
+            </div>
+          `;
+        }).join('');
+      } catch (err) {
+        container.innerHTML = `<div class="card" style="padding: 24px; color: var(--accent); text-align: center;">Error al cargar mensajes: ${err.message}</div>`;
+      }
+    }
+
+    async function deleteMessage(id) {
+      if (!confirm('¿Eliminar este mensaje?')) return;
+      try {
+        const res = await fetch(`/api/contact/messages/${id}`, {
+          method: 'DELETE',
+          headers: { 'Authorization': 'Bearer ' + getAuthToken() }
+        });
+        if (res.ok) {
+          showToast('Mensaje eliminado', 'info');
+          loadMessages();
+        }
+      } catch (e) {
+        showToast('Error al eliminar mensaje', 'error');
+      }
+    }
+
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const isAuthed = await checkAuth();
+      if (isAuthed) { loadMessages(); }
+      loadStats();
+      loadCategories();
+      loadProducts();
+
+      // Listeners
+      document.getElementById('searchInput').addEventListener('input', debounce(loadProducts, 300));
+      document.getElementById('categoryFilter').addEventListener('change', loadProducts);
+      document.getElementById('statusFilter').addEventListener('change', loadProducts);
+      document.getElementById('btnOpenAddModal').addEventListener('click', openAddModal);
+      document.getElementById('productForm').addEventListener('submit', handleProductSubmit);
+      document.getElementById('btnConfirmDelete').addEventListener('click', handleDeleteConfirm);
+
+      // Image preview listener
+      const fileInput = document.getElementById('prodImageFile');
+      const urlInput = document.getElementById('prodImageUrl');
+      fileInput.addEventListener('change', (e) => {
+        if (e.target.files && e.target.files[0]) {
+          const reader = new FileReader();
+          reader.onload = (re) => showPreview(re.target.result);
+          reader.readAsDataURL(e.target.files[0]);
+        }
+      });
+      urlInput.addEventListener('input', (e) => {
+        if (e.target.value) showPreview(e.target.value);
+      });
+    });
+
+    function showPreview(src) {
+      const img = document.getElementById('previewImg');
+      const placeholder = document.getElementById('previewPlaceholder');
+      if (src) {
+        img.src = src;
+        img.style.display = 'block';
+        placeholder.style.display = 'none';
+      } else {
+        img.src = '';
+        img.style.display = 'none';
+        placeholder.style.display = 'block';
+      }
+    }
+
+    async function loadStats() {
+      try {
+        const res = await fetch('/api/products/stats');
+        const data = await res.json();
+        document.getElementById('statTotal').textContent = data.total;
+        document.getElementById('statInStock').textContent = data.inStock;
+        document.getElementById('statOutOfStock').textContent = data.outOfStock;
+        document.getElementById('statCategories').textContent = data.categories;
+      } catch (err) {
+        console.error('Error cargando stats:', err);
+      }
+    }
+
+    async function loadCategories() {
+      try {
+        const res = await fetch('/api/products/categories');
+        const categories = await res.json();
+        const select = document.getElementById('categoryFilter');
+        const datalist = document.getElementById('categoryDatalist');
+        
+        select.innerHTML = '<option value="all">Todas las Categorías</option>';
+        datalist.innerHTML = '';
+
+        categories.forEach(cat => {
+          const opt = document.createElement('option');
+          opt.value = cat;
+          opt.textContent = cat;
+          select.appendChild(opt);
+
+          const dlOpt = document.createElement('option');
+          dlOpt.value = cat;
+          datalist.appendChild(dlOpt);
+        });
+      } catch (err) {
+        console.error('Error cargando categorias:', err);
+      }
+    }
+
+    async function loadProducts() {
+      const search = document.getElementById('searchInput').value.trim();
+      const category = document.getElementById('categoryFilter').value;
+      const status = document.getElementById('statusFilter').value;
+
+      const params = new URLSearchParams();
+      if (search) params.append('search', search);
+      if (category !== 'all') params.append('category', category);
+      if (status !== 'all') params.append('status', status);
+
+      const tbody = document.getElementById('productsTableBody');
+      tbody.innerHTML = `<tr><td colspan="7" class="empty-state"><i class="fa-solid fa-spinner fa-spin"></i><p>Cargando productos...</p></td></tr>`;
+
+      try {
+        const res = await fetch(`/api/products?${params.toString()}`);
+        products = await res.json();
+        renderProducts(products);
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="7" class="empty-state" style="color: var(--accent);"><i class="fa-solid fa-triangle-exclamation"></i><p>Error al cargar productos</p></td></tr>`;
+      }
+    }
+
+    function renderProducts(list) {
+      const tbody = document.getElementById('productsTableBody');
+      if (list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="empty-state"><i class="fa-solid fa-box-open"></i><p>No se encontraron productos</p></td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = list.map(p => {
+        const img = p.image_url || '/wp-content/uploads/woocommerce-placeholder.png';
+        const cats = (p.categories && p.categories.length) ? p.categories.join(', ') : 'Sin categoría';
+        const inStock = p.stock_status === 'instock';
+        const isPublished = p.status === 'publish';
+
+        return `
+          <tr>
+            <td>
+              <img src="${img}" class="prod-img" alt="${escapeHtml(p.title)}" onerror="this.src='/wp-content/uploads/woocommerce-placeholder.png'">
+            </td>
+            <td>
+              <div class="prod-title">${escapeHtml(p.title)}</div>
+              <div class="prod-sku">SKU: ${escapeHtml(p.sku || 'N/A')} &bull; ID: #${p.id}</div>
+            </td>
+            <td><span class="badge badge-info">${escapeHtml(cats)}</span></td>
+            <td>
+              <span class="price-tag">$${Number(p.price).toLocaleString()}</span>
+              ${p.regular_price && p.regular_price > p.price ? `<span class="price-regular">$${Number(p.regular_price).toLocaleString()}</span>` : ''}
+            </td>
+            <td>
+              <span class="badge ${inStock ? 'badge-success' : 'badge-danger'}">
+                ${inStock ? ((p.stock_quantity !== null && p.stock_quantity !== undefined && p.stock_quantity !== '') ? `En stock (${p.stock_quantity} unid.)` : 'En stock') : 'Agotado'}
+              </span>
+            </td>
+            <td>
+              <span class="badge ${isPublished ? 'badge-secondary' : 'badge-danger'}">
+                ${isPublished ? 'Publicado' : 'Borrador'}
+              </span>
+            </td>
+            <td>
+              <div class="actions-cell" style="display: flex; align-items: center; gap: 8px;">
+                <button onclick="quickToggleDeal(${p.id})" style="border-radius: 50px; padding: 4px 10px; font-size: 0.75rem; font-weight: 700; cursor: pointer; border: 1px solid ${p.is_deal === 1 ? '#fca5a5' : '#cbd5e1'}; background: ${p.is_deal === 1 ? '#fee2e2' : '#ffffff'}; color: ${p.is_deal === 1 ? '#dc2626' : '#64748b'}; transition: all 0.2s;" title="${p.is_deal === 1 ? 'Quitar de las 3 Ofertas del Día' : 'Poner en las 3 Ofertas del Día de la Portada'}">
+                  ${p.is_deal === 1 ? '🔥 En Portada' : '+ Oferta'}
+                </button>
+                <button class="btn btn-outline btn-icon" onclick="openEditModal(${p.id})" title="Editar">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+                <button class="btn btn-outline btn-icon" style="color: var(--accent);" onclick="openDeleteModal(${p.id}, '${escapeHtml(p.title.replace(/'/g, "\\'"))}')" title="Eliminar">
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    
+    async function quickToggleDeal(id) {
+      try {
+        const res = await fetch(`/api/products/${id}/toggle-deal`, {
+          method: 'PATCH',
+          headers: { 'Authorization': 'Bearer ' + getAuthToken() }
+        });
+        if (res.ok) {
+          const updated = await res.json();
+          showToast(updated.is_deal ? '✓ Producto agregado a las Ofertas de la Portada' : '✓ Producto quitado de las Ofertas de la Portada', 'success');
+          loadProducts();
+        } else {
+          showToast('Error al cambiar estado de oferta', 'error');
+        }
+      } catch (err) {
+        showToast('Error de conexión', 'error');
+      }
+    }
+
+    function openAddModal() {
+      document.getElementById('modalTitle').textContent = 'Agregar Producto';
+      document.getElementById('productForm').reset();
+      document.getElementById('productId').value = '';
+      document.getElementById('prodStockQuantity').value = '';
+      document.getElementById('prodIsDeal').checked = false;
+      showPreview('');
+      document.getElementById('productModal').classList.add('open');
+    }
+
+    function openEditModal(id) {
+      const prod = products.find(p => p.id === id);
+      if (!prod) return;
+
+      document.getElementById('modalTitle').textContent = 'Editar Producto #' + id;
+      document.getElementById('productId').value = prod.id;
+      document.getElementById('prodTitle').value = prod.title || '';
+      document.getElementById('prodSku').value = prod.sku || '';
+      document.getElementById('prodCategory').value = (prod.categories || []).join(', ');
+      document.getElementById('prodPrice').value = prod.price || '';
+      document.getElementById('prodRegularPrice').value = prod.regular_price || '';
+      document.getElementById('prodSalePrice').value = prod.sale_price || '';
+      document.getElementById('prodStockStatus').value = prod.stock_status || 'instock';
+      document.getElementById('prodStockQuantity').value = (prod.stock_quantity !== null && prod.stock_quantity !== undefined) ? prod.stock_quantity : '';
+      document.getElementById('prodIsDeal').checked = prod.is_deal === 1;
+      document.getElementById('prodStatus').value = prod.status || 'publish';
+      document.getElementById('prodImageUrl').value = prod.image_url || '';
+      document.getElementById('prodImageFile').value = '';
+      document.getElementById('prodDesc').value = prod.description || '';
+
+      showPreview(prod.image_url);
+      document.getElementById('productModal').classList.add('open');
+    }
+
+    function closeProductModal() {
+      document.getElementById('productModal').classList.remove('open');
+    }
+
+    async function handleProductSubmit(e) {
+      e.preventDefault();
+      const saveBtn = document.getElementById('btnSaveProduct');
+      saveBtn.disabled = true;
+      saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Guardando...';
+
+      try {
+        const id = document.getElementById('productId').value;
+        const formData = new FormData();
+
+        formData.append('title', document.getElementById('prodTitle').value.trim());
+        formData.append('sku', document.getElementById('prodSku').value.trim());
+        formData.append('categories', document.getElementById('prodCategory').value.trim());
+        formData.append('price', document.getElementById('prodPrice').value);
+        formData.append('regular_price', document.getElementById('prodRegularPrice').value);
+        formData.append('sale_price', document.getElementById('prodSalePrice').value);
+        formData.append('stock_status', document.getElementById('prodStockStatus').value);
+        formData.append('stock_quantity', document.getElementById('prodStockQuantity').value);
+        formData.append('is_deal', document.getElementById('prodIsDeal').checked ? '1' : '0');
+        formData.append('status', document.getElementById('prodStatus').value);
+        formData.append('description', document.getElementById('prodDesc').value.trim());
+
+        const fileInput = document.getElementById('prodImageFile');
+        if (fileInput.files[0]) {
+          formData.append('image', fileInput.files[0]);
+        } else {
+          formData.append('image_url', document.getElementById('prodImageUrl').value.trim());
+        }
+
+        const url = id ? `/api/products/${id}` : '/api/products';
+        const method = id ? 'PUT' : 'POST';
+
+        const res = await fetch(url, {
+          headers: { 'Authorization': 'Bearer ' + getAuthToken() },
+          method,
+          body: formData
+        });
+
+        if (!res.ok) {
+          const errData = await res.json();
+          throw new Error(errData.error || 'Error en el servidor');
+        }
+
+        closeProductModal();
+        showToast(id ? 'Producto actualizado con éxito' : 'Producto agregado con éxito', 'success');
+        loadProducts();
+        loadStats();
+        loadCategories();
+      } catch (err) {
+        showToast(err.message, 'error');
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Guardar Producto';
+      }
+    }
+
+    function openDeleteModal(id, title) {
+      deleteTargetId = id;
+      document.getElementById('deleteProdTitle').textContent = title;
+      document.getElementById('deleteModal').classList.add('open');
+    }
+
+    function closeDeleteModal() {
+      deleteTargetId = null;
+      document.getElementById('deleteModal').classList.remove('open');
+    }
+
+    async function handleDeleteConfirm() {
+      if (!deleteTargetId) return;
+      const btn = document.getElementById('btnConfirmDelete');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Eliminando...';
+
+      try {
+        const res = await fetch(`/api/products/${deleteTargetId}`, {
+          headers: { 'Authorization': 'Bearer ' + getAuthToken() },
+          method: 'DELETE'
+        });
+
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err.error || 'No se pudo eliminar el producto');
+        }
+
+        closeDeleteModal();
+        showToast('Producto eliminado correctamente', 'success');
+        loadProducts();
+        loadStats();
+      } catch (err) {
+        showToast(err.message, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-trash-can"></i> Eliminar';
+      }
+    }
+
+    function showToast(msg, type = 'info') {
+      const toast = document.getElementById('toast');
+      toast.className = 'show ' + type;
+      document.getElementById('toastMsg').textContent = msg;
+      setTimeout(() => {
+        toast.className = '';
+      }, 3500);
+    }
+
+    function debounce(fn, ms) {
+      let timeout;
+      return function(...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => fn.apply(this, args), ms);
+      };
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+  </script>
+</body>
+</html>

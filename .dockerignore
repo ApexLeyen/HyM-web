@@ -1,0 +1,13 @@
+node_modules/
+npm-debug.log
+.git
+.gitignore
+*.dump.html
+*_dump.html
+elementor_*.html
+extract*.*
+extracted_products.txt
+local-site.json
+app/
+conf/
+logs/
